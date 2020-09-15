@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   mediumScreen,
   smallScreen,
 } from "../../globalStyles/scss/variables.scss";
 import "./scss/index.scss";
 
-import { useSignOut, useUserDetails } from "@sdk/react";
+import { useCart, useSignOut, useUserDetails } from "@sdk/react";
 
 import Media from "react-media";
 import { Link } from "react-router-dom";
@@ -20,9 +20,7 @@ import {
   OverlayType,
 } from "..";
 import * as appPaths from "../../app/routes";
-import { CheckoutContext } from "../../checkout/context";
 import { maybe } from "../../core/utils";
-import { CartContext } from "../CartProvider/context";
 import NavDropdown from "./NavDropdown";
 import { TypedMainMenuQuery } from "./queries";
 
@@ -36,14 +34,16 @@ import userImg from "../../images/user.svg";
 const MainMenu: React.FC = () => {
   const { data: user } = useUserDetails();
   const [signOut] = useSignOut();
-  const { clear: clearCart } = useContext(CartContext);
-  const { clear: clearCheckout } = useContext(CheckoutContext);
+  const { items } = useCart();
 
   const handleSignOut = () => {
     signOut();
-    clearCart();
-    clearCheckout();
   };
+
+  const cartItemsQuantity =
+    (items &&
+      items.reduce((prevVal, currVal) => prevVal + currVal.quantity, 0)) ||
+    0;
 
   return (
     <OverlayContext.Consumer>
@@ -94,6 +94,61 @@ const MainMenu: React.FC = () => {
                         ))
                       }
                     />
+                    <Online>
+                <Media
+                  query={{ maxWidth: smallScreen }}
+                  render={() => (
+                    <>
+                      {user ? (
+                        <MenuDropdown
+                          suffixClass={'__rightdown'}
+                          head={
+                            <li className="main-menu__icon main-menu__user--active">
+                              <ReactSVG path={userImg} />
+                            </li>
+                          }
+                          content={
+                            <ul className="main-menu__dropdown">
+                              <li data-testid="my_account__link">
+                                <Link to={appPaths.accountUrl}>My Account</Link>
+                              </li>
+                              <li data-testid="order_history__link">
+                                <Link to={appPaths.orderHistoryUrl}>
+                                  Order history
+                                </Link>
+                              </li>
+                              <li data-testid="address_book__link">
+                                <Link to={appPaths.addressBookUrl}>
+                                  Address book
+                                </Link>
+                              </li>
+                              <li
+                                onClick={handleSignOut}
+                                data-testid="logout-link"
+                              >
+                                Log Out
+                              </li>
+                            </ul>
+                          }
+                        />
+                      ) : (
+                        <li
+                          data-testid="login-btn"
+                          className="main-menu__icon"
+                          onClick={() =>
+                            overlayContext.show(
+                              OverlayType.login,
+                              OverlayTheme.left
+                            )
+                          }
+                        >
+                          <ReactSVG path={userImg} />
+                        </li>
+                      )}
+                    </>
+                  )}
+                />
+              </Online>
                   </ul>
                 );
               }}
@@ -135,11 +190,6 @@ const MainMenu: React.FC = () => {
                                   Address book
                                 </Link>
                               </li>
-                              <li data-testid="payment_options__link">
-                                <Link to={appPaths.paymentOptionsUrl}>
-                                  Payment options
-                                </Link>
-                              </li>
                               <li
                                 onClick={handleSignOut}
                                 data-testid="logout-link"
@@ -166,26 +216,19 @@ const MainMenu: React.FC = () => {
                     </>
                   )}
                 />
-                <CartContext.Consumer>
-                  {cart => (
-                    <li
-                      className="main-menu__icon main-menu__cart"
-                      onClick={() => {
-                        overlayContext.show(
-                          OverlayType.cart,
-                          OverlayTheme.right
-                        );
-                      }}
-                    >
-                      <ReactSVG path={cartImg} />
-                      {cart.getQuantity() > 0 ? (
-                        <span className="main-menu__cart__quantity">
-                          {cart.getQuantity()}
-                        </span>
-                      ) : null}
-                    </li>
-                  )}
-                </CartContext.Consumer>
+                <li
+                  className="main-menu__icon main-menu__cart"
+                  onClick={() => {
+                    overlayContext.show(OverlayType.cart, OverlayTheme.right);
+                  }}
+                >
+                  <ReactSVG path={cartImg} />
+                  {cartItemsQuantity > 0 ? (
+                    <span className="main-menu__cart__quantity">
+                      {cartItemsQuantity}
+                    </span>
+                  ) : null}
+                </li>
               </Online>
               <Offline>
                 <li className="main-menu__offline">

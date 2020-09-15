@@ -3,7 +3,7 @@ import React from "react";
 import { Icon, Input } from "@components/atoms";
 import { InputSelect } from "@components/molecules";
 import { useSelectableProductVariantsAttributeValues } from "@hooks";
-import { ProductDetails_product_variants } from "@sdk/queries/types/ProductDetails";
+import { ProductDetails_product_variants } from "@sdk/queries/gqlTypes/ProductDetails";
 import {
   IProductVariantsAttribute,
   IProductVariantsAttributesSelectedValues,
@@ -113,6 +113,7 @@ export const ProductVariantAttributeSelect: React.FC<{
           value={selectedValue ? selectedValue.value : ""}
           onChange={() => null}
           contentRight={getRightInputContent(!!selectedValue)}
+          readOnly={true}
         />
         <SelectSidebar
           options={attributeOptions}

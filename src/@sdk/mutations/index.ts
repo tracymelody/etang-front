@@ -2,65 +2,44 @@ import {
   ApolloClient,
   MutationOptions as ApolloMutationOptions,
 } from "apollo-client";
-import gql from "graphql-tag";
 
 import * as Address from "./address";
 import * as Auth from "./auth";
-import * as Checkout from "./checkout";
 import * as User from "./user";
 
 import {
-  CreateCheckout,
-  CreateCheckoutVariables,
-} from "./types/CreateCheckout";
-import {
   DeleteUserAddress,
   DeleteUserAddressVariables,
-} from "./types/DeleteUserAddress";
+} from "./gqlTypes/DeleteUserAddress";
 
 import {
   CreateUserAddress,
   CreateUserAddressVariables,
-} from "./types/CreateUserAddress";
+} from "./gqlTypes/CreateUserAddress";
 
 import {
   SetCustomerDefaultAddress,
   SetCustomerDefaultAddressVariables,
-} from "./types/SetCustomerDefaultAddress";
+} from "./gqlTypes/SetCustomerDefaultAddress";
 
 import {
   UpdateUserAddress,
   UpdateUserAddressVariables,
-} from "./types/UpdateUserAddress";
+} from "./gqlTypes/UpdateUserAddress";
 
-import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
+import { SetPassword, SetPasswordVariables } from "./gqlTypes/SetPassword";
 
-import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
-import {
-  UpdateCheckoutBillingAddress,
-  UpdateCheckoutBillingAddressVariables,
-} from "./types/UpdateCheckoutBillingAddress";
-import {
-  UpdateCheckoutShippingAddress,
-  UpdateCheckoutShippingAddressVariables,
-} from "./types/UpdateCheckoutShippingAddress";
+import { TokenAuth, TokenAuthVariables } from "./gqlTypes/TokenAuth";
 
 import {
   PasswordChange,
   PasswordChangeVariables,
-} from "./types/PasswordChange";
+} from "./gqlTypes/PasswordChange";
 
 import {
-  AddCheckoutPromoCode,
-  AddCheckoutPromoCodeVariables,
-} from "./types/AddCheckoutPromoCode";
-
-import {
-  RemoveCheckoutPromoCode,
-  RemoveCheckoutPromoCodeVariables,
-} from "./types/RemoveCheckoutPromoCode";
-
-import { AccountUpdate, AccountUpdateVariables } from "./types/AccountUpdate";
+  AccountUpdate,
+  AccountUpdateVariables,
+} from "./gqlTypes/AccountUpdate";
 
 export type MutationOptions<TData, TVariables> = Omit<
   ApolloMutationOptions<TData, TVariables>,
@@ -74,22 +53,7 @@ export const MUTATIONS = {
     options: MutationOptions<AccountUpdate, AccountUpdateVariables>
   ) =>
     client.mutate({
-      mutation: gql`
-        ${User.accountUpdate}
-      `,
-      ...options,
-    }),
-  AddCheckoutPromoCode: <TCacheShape>(
-    client: ApolloClient<TCacheShape>,
-    options: MutationOptions<
-      AddCheckoutPromoCode,
-      AddCheckoutPromoCodeVariables
-    >
-  ) =>
-    client.mutate({
-      mutation: gql`
-        ${Checkout.addCheckoutPromoCode}
-      `,
+      mutation: User.accountUpdate,
       ...options,
     }),
   AddressTypeUpdate: <TCacheShape>(
@@ -100,19 +64,7 @@ export const MUTATIONS = {
     >
   ) =>
     client.mutate({
-      mutation: gql`
-        ${Address.setCustomerDefaultAddress}
-      `,
-      ...options,
-    }),
-  CreateCheckout: <TCacheShape>(
-    client: ApolloClient<TCacheShape>,
-    options: MutationOptions<CreateCheckout, CreateCheckoutVariables>
-  ) =>
-    client.mutate({
-      mutation: gql`
-        ${Checkout.createCheckoutMutation}
-      `,
+      mutation: Address.setCustomerDefaultAddress,
       ...options,
     }),
   CreateUserAddress: <TCacheShape>(
@@ -120,9 +72,7 @@ export const MUTATIONS = {
     options: MutationOptions<CreateUserAddress, CreateUserAddressVariables>
   ) =>
     client.mutate({
-      mutation: gql`
-        ${Address.createUserAddress}
-      `,
+      mutation: Address.createUserAddress,
       ...options,
     }),
   DeleteUserAddress: <TCacheShape>(
@@ -130,9 +80,7 @@ export const MUTATIONS = {
     options: MutationOptions<DeleteUserAddress, DeleteUserAddressVariables>
   ) =>
     client.mutate({
-      mutation: gql`
-        ${Address.deleteUserAddress}
-      `,
+      mutation: Address.deleteUserAddress,
       ...options,
     }),
   PasswordChange: <TCacheShape>(
@@ -140,22 +88,7 @@ export const MUTATIONS = {
     options: MutationOptions<PasswordChange, PasswordChangeVariables>
   ) =>
     client.mutate({
-      mutation: gql`
-        ${User.changeUserPassword}
-      `,
-      ...options,
-    }),
-  RemoveCheckoutPromoCode: <TCacheShape>(
-    client: ApolloClient<TCacheShape>,
-    options: MutationOptions<
-      RemoveCheckoutPromoCode,
-      RemoveCheckoutPromoCodeVariables
-    >
-  ) =>
-    client.mutate({
-      mutation: gql`
-        ${Checkout.removeCheckoutPromoCode}
-      `,
+      mutation: User.changeUserPassword,
       ...options,
     }),
   SetPassword: <TCacheShape>(
@@ -163,9 +96,7 @@ export const MUTATIONS = {
     options: MutationOptions<SetPassword, SetPasswordVariables>
   ) =>
     client.mutate({
-      mutation: gql`
-        ${User.setPassword}
-      `,
+      mutation: User.setPassword,
       ...options,
     }),
   TokenAuth: <TCacheShape>(
@@ -173,35 +104,7 @@ export const MUTATIONS = {
     options: MutationOptions<TokenAuth, TokenAuthVariables>
   ) =>
     client.mutate({
-      mutation: gql`
-        ${Auth.tokenAuthMutation}
-      `,
-      ...options,
-    }),
-  UpdateCheckoutBillingAddress: <TCacheShape>(
-    client: ApolloClient<TCacheShape>,
-    options: MutationOptions<
-      UpdateCheckoutBillingAddress,
-      UpdateCheckoutBillingAddressVariables
-    >
-  ) =>
-    client.mutate({
-      mutation: gql`
-        ${Checkout.updateCheckoutBillingAddressMutation}
-      `,
-      ...options,
-    }),
-  UpdateCheckoutShippingAddress: <TCacheShape>(
-    client: ApolloClient<TCacheShape>,
-    options: MutationOptions<
-      UpdateCheckoutShippingAddress,
-      UpdateCheckoutShippingAddressVariables
-    >
-  ) =>
-    client.mutate({
-      mutation: gql`
-        ${Checkout.updateCheckoutShippingAddressMutation}
-      `,
+      mutation: Auth.tokenAuthMutation,
       ...options,
     }),
   UpdateUserAddress: <TCacheShape>(
@@ -209,9 +112,7 @@ export const MUTATIONS = {
     options: MutationOptions<UpdateUserAddress, UpdateUserAddressVariables>
   ) =>
     client.mutate({
-      mutation: gql`
-        ${Address.updateUserAddress}
-      `,
+      mutation: Address.updateUserAddress,
       ...options,
     }),
 };
