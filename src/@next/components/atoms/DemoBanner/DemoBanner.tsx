@@ -12,7 +12,7 @@ export const DemoBanner: React.FC = () => {
     <S.Wrapper>
       <S.BorderedWrapper>
         {/* eslint-disable-next-line react/jsx-no-target-blank */}
-        <a target="_blank" href="https://saleor.io/">
+        <a target="_blank" href="https://etang.de/">
           <S.LogoWrapper path={LogoSmall} />
         </a>
         <S.LinkList>

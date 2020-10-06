@@ -1,9 +1,9 @@
 {
-  "name": "saleor-site",
+  "name": "etang-front",
   "version": "2.11.0-a.0",
   "private": true,
   "author": "Mirumee",
-  "homepage": "https://getsaleor.com/",
+  "homepage": "https://etang.de/",
   "main": "dist/index.js",
   "browserslist": "last 2 versions",
   "dependencies": {
