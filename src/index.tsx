@@ -17,8 +17,10 @@ import { defaultTheme, GlobalStyle } from "@styles";
 
 import { App } from "./app";
 import { LocaleProvider } from "./components/Locale";
+import { PreferencesProvider } from "./components/Preferences";
 import {
   apiUrl,
+  defaultLocale,
   sentryDsn,
   sentrySampleRate,
   serviceWorkerTimeout,
@@ -66,10 +68,12 @@ const startApp = async () => {
         {...notificationOptions}
       >
         <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
-          <LocaleProvider>
-            <GlobalStyle />
-            <Root />
-          </LocaleProvider>
+          <PreferencesProvider defaultLocale={defaultLocale}>
+            <LocaleProvider>
+              <GlobalStyle />
+              <Root />
+            </LocaleProvider>
+          </PreferencesProvider>
         </ServiceWorkerProvider>
       </AlertProvider>
     </ThemeProvider>,

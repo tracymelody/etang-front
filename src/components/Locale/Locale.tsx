@@ -1,5 +1,7 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
+import { usePreferences } from "@hooks";
+import { Locale } from "@types";
 
 import locale_AR from "@locale/ar.json";
 import locale_AZ from "@locale/az.json";
@@ -45,59 +47,12 @@ import locale_VI from "@locale/vi.json";
 import locale_ZH_HANS from "@locale/zh-Hans.json";
 import locale_ZH_HANT from "@locale/zh-Hant.json";
 
-export enum Locale {
-  EN = "en",
-  PL = "pl",
-  AR = "ar",
-  AZ = "az",
-  BG = "bg",
-  BN = "bn",
-  CA = "ca",
-  CS = "cs",
-  DA = "da",
-  DE = "de",
-  EL = "el",
-  ES = "es",
-  ES_CO = "es_CO",
-  ET = "et",
-  FA = "fa",
-  FI = "fi",
-  FR = "fr",
-  HI = "hi",
-  HU = "hu",
-  HY = "hy",
-  ID = "id",
-  IS = "is",
-  IT = "it",
-  JA = "ja",
-  KO = "ko",
-  LT = "lt",
-  MN = "mn",
-  NB = "nb",
-  NL = "nl",
-  PT = "pt",
-  PT_BR = "pt_BR",
-  RO = "ro",
-  RU = "ru",
-  SK = "sk",
-  SL = "sl",
-  SQ = "sq",
-  SR = "sr",
-  SV = "sv",
-  TH = "th",
-  TR = "tr",
-  UK = "uk",
-  VI = "vi",
-  ZH_HANS = "zh-Hans",
-  ZH_HANT = "zh-Hant",
-}
-
 interface StructuredMessage {
   context?: string;
   string: string;
 }
 type LocaleMessages = Record<string, StructuredMessage>;
-const localeData: Record<Locale, LocaleMessages> = {
+const localeData: Record<Locale, LocaleMessages | undefined> = {
   // Default language
   [Locale.EN]: undefined,
   [Locale.PL]: locale_PL,
@@ -192,10 +147,66 @@ export const localeNames: Record<Locale, string> = {
   [Locale.ZH_HANT]: "繁體中文",
 };
 
+export const localeFlag: Record<Locale, string | null> = {
+  [Locale.AR]: "EG",
+  [Locale.AZ]: "AZ",
+  [Locale.BG]: "BG",
+  [Locale.BN]: "BD",
+  [Locale.CA]: "AD",
+  [Locale.CS]: "CZ",
+  [Locale.DA]: "DK",
+  [Locale.DE]: "DE",
+  [Locale.EL]: "GR",
+  [Locale.EN]: "GB",
+  [Locale.ES]: "ES",
+  [Locale.ES_CO]: "CO",
+  [Locale.ET]: "EE",
+  [Locale.FA]: "IR",
+  [Locale.FI]: "FI",
+  [Locale.FR]: "FR",
+  [Locale.HI]: null,
+  [Locale.HU]: "HU",
+  [Locale.HY]: "AM",
+  [Locale.ID]: "ID",
+  [Locale.IS]: "IS",
+  [Locale.LT]: "LT",
+  [Locale.IT]: "IT",
+  [Locale.JA]: "JP",
+  [Locale.KO]: null,
+  [Locale.MN]: "MN",
+  [Locale.NB]: "NO",
+  [Locale.NL]: null,
+  [Locale.PL]: "PL",
+  [Locale.PT]: "PT",
+  [Locale.PT_BR]: "BR",
+  [Locale.RO]: null,
+  [Locale.RU]: null,
+  [Locale.SK]: "SK",
+  [Locale.SL]: "SI",
+  [Locale.SQ]: "AL",
+  [Locale.SR]: "RS",
+  [Locale.SV]: "SE",
+  [Locale.TH]: "TH",
+  [Locale.TR]: "TR",
+  [Locale.UK]: "UA",
+  [Locale.VI]: "VN",
+  [Locale.ZH_HANS]: "CN",
+  [Locale.ZH_HANT]: "CN",
+};
+
+export const localesOptions = (Object.keys(localeNames) as Array<Locale>).map(
+  locale => ({
+    localeCode: locale,
+    localeName: localeNames[locale],
+  })
+);
+
 const dotSeparator = "_dot_";
 const sepRegExp = new RegExp(dotSeparator, "g");
 
-function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
+function getKeyValueJson(
+  messages: LocaleMessages | undefined
+): Record<string, string> | undefined {
   if (messages) {
     const keyValueMessages: Record<string, string> = {};
     return Object.entries(messages).reduce((acc, [id, msg]) => {
@@ -205,15 +216,14 @@ function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
   }
 }
 
-const defaultLocale = Locale.EN;
-
 const LocaleProvider: React.FC = ({ children }) => {
-  // For now locale can be set here
-  const locale = Locale.EN;
+  const {
+    preferences: { locale },
+  } = usePreferences();
 
   return (
     <IntlProvider
-      defaultLocale={defaultLocale}
+      defaultLocale={Locale.EN}
       locale={locale}
       messages={getKeyValueJson(localeData[locale])}
       key={locale}
