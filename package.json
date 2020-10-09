@@ -1,8 +1,8 @@
 {
   "name": "etang-front",
-  "version": "2.11.0-a.0",
+  "version": "2.11.0-rc.5",
   "private": true,
-  "author": "Mirumee",
+  "author": "Mirumee&Jiawei",
   "homepage": "https://etang.de/",
   "main": "dist/index.js",
   "browserslist": "last 2 versions",
