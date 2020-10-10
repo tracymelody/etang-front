@@ -2,7 +2,7 @@ import { Locale } from "@types";
 
 export const localesOptions = [
   { localeCode: Locale.EN, localeName: "English" },
-  { localeCode: Locale.PL, localeName: "polski" },
+  { localeCode: Locale.DE, localeName: "Deutsch" },
 ];
 
 export const preferencesEN = {
@@ -10,5 +10,5 @@ export const preferencesEN = {
 };
 
 export const preferencesPL = {
-  locale: Locale.PL,
+  locale: Locale.DE,
 };
