@@ -3,7 +3,7 @@
     "string": "Neues {type} hinzufügen"
   },
   "@next_dot_components_dot_atoms_dot_DropdownSelect_dot_DropdownSelect_dot_3280510613": {
-    "string": "Sortieren nach:"
+    "string": "SORTIERUNG:"
   },
   "@next_dot_components_dot_molecules_dot_AccountTabTiles_dot_AccountTile_dot_3253048083": {
     "string": "Mein Konto"
@@ -66,7 +66,7 @@
     "string": "Produkteigenschaften"
   },
   "@next_dot_components_dot_molecules_dot_ProductListHeader_dot_ProductListHeader_dot_3317426832": {
-    "string": "Keine Produkttypen gefunden.:"
+    "string": "Artikel :"
   },
   "@next_dot_components_dot_molecules_dot_ResetPasswordForm_dot_ResetPasswordForm_dot_1865992141": {
     "string": "Bitte geben Sie ein neues Passwort ein"
@@ -216,10 +216,10 @@
     "string": "Weiter einkaufen"
   },
   "components_dot_OverlayManager_dot_Cart_dot_Empty_dot_4121934554": {
-    "string": "Sie haben in Ihrem Warenkorb nichts hinzugefügt. Wir sind sicher, dass Sie in unserem Webseite schönes finden können."
+    "string": "Leg los und fülle deinen Warenkorb mit Etang Produkte ."
   },
   "components_dot_OverlayManager_dot_Cart_dot_Empty_dot_966560142": {
-    "string": "Sie haben keine Artikel im Warenkorb"
+    "string": "DEIN WARENKORB IST LEER "
   },
   "components_dot_OverlayManager_dot_Cart_dot_ProductList_dot_3897981513": {
     "string": "Qty: {quantity}"
@@ -243,10 +243,10 @@
     "string": "Ihre Konto"
   },
   "components_dot_OverlayManager_dot_Login_dot_index_dot_3254057623": {
-    "string": "Neues Konto anlegen"
+    "string": "NOCH KEIN KONTO?"
   },
   "components_dot_OverlayManager_dot_Login_dot_index_dot_3293735236": {
-    "string": "Konto anmelden"
+    "string": "Anmelden"
   },
   "components_dot_OverlayManager_dot_Password_dot_index_dot_4028609483": {
     "string": "Passwort vergessen?"
@@ -465,7 +465,7 @@
     "string": "Zurück zu meine Bestellungen"
   },
   "views_dot_Home_dot_Page_dot_2366307429": {
-    "string": "Final Sale"
+    "string": "FINAL REDUCTION"
   },
   "views_dot_Home_dot_Page_dot_2812648978": {
     "string": "Gestaltet"
@@ -477,7 +477,7 @@
     "string": "Kategorie"
   },
   "views_dot_Home_dot_Page_dot_4153800196": {
-    "string": "Bis zu 70% EXTRA-RABATT auf den OUTLETPREIS"
+    "string": "70% RABATT auf Alle Produkt"
   },
   "views_dot_Product_dot_Other_dot_3212906417": {
     "string": "Andere Produkte in dieser Kategorie"
