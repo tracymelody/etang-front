@@ -110,7 +110,7 @@ module.exports = ({ sourceDir, distDir }) => ({
         display: "standalone",
         theme_color: "#333",
       },
-      logo: `${sourceDir}/images/favicon.png`,
+      logo: `${sourceDir}/images/favicon.svg`,
       prefix: "images/favicons/",
     }),
     new webpack.EnvironmentPlugin({
