@@ -35,7 +35,7 @@ export const PROVIDERS = {
 };
 export const STATIC_PAGES = [
   {
-    label: "About",
+    label: "Über uns",
     url: generatePageUrl("about"),
   },
 ];
