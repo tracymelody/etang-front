@@ -30,7 +30,7 @@
     "braintree-web": "^3.38.1",
     "classnames": "^2.2.6",
     "core-js": "^2.5.7",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.2.1",
     "dompurify": "^2.0.7",
     "draftjs-to-html": "^0.8.4",
     "formik": "^1.5.7",
@@ -208,7 +208,7 @@
     "tsc": "npx tsc --noEmit & npx tsc --noEmit -p src/@next",
     "heroku-postbuild": "npm run build",
     "sitemap": "ts-node ./src/sitemap-builder.ts",
-    "generate": "npx plop --plopfile ./.plop/index.js",
+    "generate": "plop",
     "cy:run": "cypress run",
     "cy:run:record": "npm run cy:run -- --record",
     "cy:open": "cypress open",
@@ -217,7 +217,6 @@
     "test:e2e:dev": "start-server-and-test start http://localhost:3000 cy:open",
     "extract-json-messages": "rimraf dist/locale && cross-env NODE_ENV=extract babel src 'src/**/*.{ts,tsx}' -o /dev/null",
     "transpile-messages": "node scripts/transpile-tx.js",
-    "extract-messages": "npm run extract-json-messages && npm run transpile-messages",
-    "generate": "plop"
+    "extract-messages": "npm run extract-json-messages && npm run transpile-messages"
   }
 }

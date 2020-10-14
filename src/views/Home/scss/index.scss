@@ -116,6 +116,11 @@
         background-position: center;
         margin-bottom: 1rem;
 
+        @media (max-width: $medium-screen) {
+            height: auto;
+            min-height: 12rem;
+        }
+
         &--no-photo {
           background-color: $turquoise-light;
           background-repeat: no-repeat;
