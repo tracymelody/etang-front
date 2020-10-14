@@ -29,8 +29,6 @@ const Page: React.FC<{
   };
   const intl = useIntl();
 
-// TODO: In scss file, make more @media(max-width) scale for different size of devices and browsers, so that the when the user change the size, the main page layout change smoothly.
-
   return (
     <>
       <script className="structured-data-list" type="application/ld+json">
