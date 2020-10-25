@@ -28,7 +28,7 @@ export const getProductPrice = (
         </S.UndiscountedPrice>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <S.DiscountedPrice>
-            <TaxedMoney taxedMoney={variantPricing.price} />
+          <TaxedMoney taxedMoney={variantPricing.price} />
         </S.DiscountedPrice>
       </>
     );

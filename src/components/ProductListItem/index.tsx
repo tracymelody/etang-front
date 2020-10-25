@@ -28,7 +28,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({ product }) => {
         </span>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <span className="product-list-item__discounted_price">
-            <TaxedMoney taxedMoney={price} />
+          <TaxedMoney taxedMoney={price} />
         </span>
       </>
     );
