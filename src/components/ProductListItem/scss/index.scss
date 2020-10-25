@@ -17,6 +17,12 @@
     font-weight: regular;
   }
 
+  &__discounted_price {
+    * {
+        color: red;
+    }
+  }
+
   &__category {
     color: $product-item-category-color;
     text-align: left;

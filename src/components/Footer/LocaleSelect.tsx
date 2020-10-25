@@ -14,7 +14,7 @@ const LocaleSelect: React.FC = () => {
   } = usePreferences();
   const [displayModal, setDisplayModal] = React.useState(false);
   return (
-    <div className="footer-nav__section right">
+    <div className="footer-nav__section">
       <h4 className="footer-nav__section-header">
         <FormattedMessage {...commonMessages.preferences} />
       </h4>
