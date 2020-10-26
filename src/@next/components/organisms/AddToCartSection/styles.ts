@@ -19,6 +19,11 @@ export const UndiscountedPrice = styled.span`
   font-size: ${props => props.theme.typography.smallFontSize};
 `;
 
+export const DiscountedPrice = styled.span`
+  color: red;
+  font-size: ${props => props.theme.typography.smallFontSize};
+`;
+
 export const VariantPicker = styled.div`
   display: grid;
   margin-top: 20px;

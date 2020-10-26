@@ -1,12 +1,6 @@
 @import "../../../globalStyles/scss/variables.scss";
 
 .footer {
-  &__favicons {
-    border-top: 1px solid $gray-light;
-    display: flex;
-    justify-content: center;
-  }
-
   &__menu {
     background-color: $gray-light;
     padding: $spacer * 3 0 $spacer * 2;
@@ -51,11 +45,16 @@
     .container {
       display: flex;
       flex-wrap: wrap;
+      flex: 1 1 0px;
 
       div:not(:last-of-type) {
-        padding-right: $spacer * 3;
+        padding-right: auto;
+        padding-left: auto;
+        @media (min-width: $small-screen) {
+            padding-right: $spacer * 3;
+        }
       }
-      
+
       .right {
         @media (min-width: $medium-screen) {
           margin-left: auto;
@@ -81,6 +80,11 @@
             color: $gray;
           }
         }
+      }
+
+      .footer__favicons {
+        border-top: 1px solid $gray-light;
+        display: flex;
       }
     }
   }
