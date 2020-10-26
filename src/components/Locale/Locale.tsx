@@ -4,7 +4,6 @@ import { usePreferences } from "@hooks";
 import { Locale } from "@types";
 
 import locale_DE from "@locale/de.json";
-import locale_ZH_HANS from "@locale/zh-Hans.json";
 
 interface StructuredMessage {
   context?: string;
@@ -15,19 +14,16 @@ const localeData: Record<Locale, LocaleMessages | undefined> = {
   // Default language
   [Locale.EN]: undefined,
   [Locale.DE]: locale_DE,
-  [Locale.ZH_HANS]: locale_ZH_HANS,
 };
 
 export const localeNames: Record<Locale, string> = {
   [Locale.DE]: "Deutsch",
   [Locale.EN]: "English",
-  [Locale.ZH_HANS]: "简体中文",
 };
 
 export const localeFlag: Record<Locale, string | null> = {
   [Locale.DE]: "DE",
   [Locale.EN]: "GB",
-  [Locale.ZH_HANS]: "CN",
 };
 
 export const localesOptions = (Object.keys(localeNames) as Array<Locale>).map(

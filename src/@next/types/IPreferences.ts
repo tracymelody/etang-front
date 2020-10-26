@@ -41,7 +41,7 @@ export enum Locale {
   // TR = "tr",
   // UK = "uk",
   // VI = "vi",
-  ZH_HANS = "zh-hans",
+  // ZH_HANS = "zh-hans",
   // ZH_HANT = "zh-hant",
 }
 
