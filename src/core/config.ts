@@ -42,29 +42,29 @@ export const STATIC_PAGES = [
 export const SOCIAL_MEDIA = [
   {
     ariaLabel: "facebook",
-    href: "https://www.facebook.com/mirumeelabs/",
+    href: "https://www.facebook.com/Etang-106467061056603",
     path: require("../images/facebook-icon.svg"),
   },
   {
     ariaLabel: "instagram",
-    href: "https://www.instagram.com/mirumeelabs/",
+    href: "https://www.instagram.com/jiaweicui.etang/",
     path: require("../images/instagram-icon.svg"),
   },
   {
     ariaLabel: "twitter",
-    href: "https://twitter.com/getsaleor",
+    href: "https://twitter.com/Etang54662800",
     path: require("../images/twitter-icon.svg"),
   },
   {
     ariaLabel: "youtube",
-    href: "https://www.youtube.com/channel/UCg_ptb-U75e7BprLCGS4s1g/videos",
+    href: "https://youtube.com/channel/UCuIfgaDV1HrmS4eYGrrigCA",
     path: require("../images/youtube-icon.svg"),
   },
 ];
 export const META_DEFAULTS = {
   custom: [],
   description:
-    "Open-source PWA storefront built with Saleor's e-commerce GraphQL API. Written with React and TypeScript.",
+    "Etang: Etwas teurer aber noch Günstig!",
   image: `${window.location.origin}${require("../images/logo.svg")}`,
   title: "Etang",
   type: "website",
