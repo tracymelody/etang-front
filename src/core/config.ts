@@ -64,7 +64,7 @@ export const SOCIAL_MEDIA = [
 export const META_DEFAULTS = {
   custom: [],
   description:
-    "Etang: Etwas teurer aber noch Günstig!",
+    "Etang: wir liefern Etwas teurer aber noch Günstig Produkten für Ihnen!",
   image: `${window.location.origin}${require("../images/logo.svg")}`,
   title: "Etang",
   type: "website",
