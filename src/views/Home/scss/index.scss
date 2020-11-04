@@ -82,12 +82,8 @@
         grid-template-columns: 1fr 1fr;
 
         > div {
-          &:nth-child(3) {
+          &:nth-child(n + 3) {
             grid-column: 3 / 1;
-          }
-
-          &:nth-child(n + 4) {
-            display: none;
           }
         }
       }
@@ -111,10 +107,11 @@
 
       &__image {
         width: 100%;
-        height: 30rem;
+        height: 30em;
         background-size: cover;
         background-position: center;
         margin-bottom: 1rem;
+        object-fit: fill;
 
         @media (max-width: $medium-screen) {
             height: auto;

@@ -15,6 +15,7 @@ const generateSitemap = async (hostname: string) => {
 
   sitemap.add({ url: "/" });
   sitemap.add({ url: "/page/about/" });
+  sitemap.add({ url: "/page/impressum/" });
 
   await getCategories(({ url }) => {
     sitemap.add({ url });
