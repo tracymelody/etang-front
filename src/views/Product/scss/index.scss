@@ -22,7 +22,18 @@
     &__description {
       width: 100%;
       min-height: $spacer * 10;
-      margin-bottom: $spacer * 9; 
+      margin-bottom: $spacer * 3; 
+    }
+
+    &__priceTracking {
+        min-height: $spacer * 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        > h3 {
+            margin-bottom: $spacer * 1;
+        }
     }
 
     &__info {

@@ -731,6 +731,10 @@ export interface ProductDetails_product {
    */
   isAvailableForPurchase: boolean | null;
   availableForPurchase: any | null;
+    /**
+   * The pricing history charts
+   */
+  metadata: any | null;
 }
 
 export interface ProductDetails {
