@@ -64,9 +64,9 @@ export const SOCIAL_MEDIA = [
 export const META_DEFAULTS = {
   custom: [],
   description:
-    "Etang: wir liefern Etwas teurer aber noch Günstig Produkten für Ihnen!",
+    "Haushalt Elektronik & Computer Zubehör Drogerie Aktion Besser Qualität schneller Lieferung ",
   image: `${window.location.origin}${require("../images/logo.svg")}`,
-  title: "Etang",
+  title: "Etang: Etwas Teuer Aber Noch Günstig online Kaufen",
   type: "website",
   url: window.location.origin,
 };
