@@ -146,7 +146,7 @@ export const productDetailsQuery = gql`
       isAvailable
       isAvailableForPurchase
       availableForPurchase
-      metadata{
+      metadata {
         key
         value
       }

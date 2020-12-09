@@ -20,14 +20,14 @@ import { structuredData } from "../../core/SEO/Product/structuredData";
 import { IProps } from "./types";
 
 const populateBreadcrumbs = product => [
-    {
-        link: generateCategoryUrl(product.category.id, product.category.name),
-        value: product.category.name,
-    },
-    {
-        link: generateProductUrl(product.id, product.name),
-        value: product.name,
-    },
+  {
+    link: generateCategoryUrl(product.category.id, product.category.name),
+    value: product.category.name,
+  },
+  {
+    link: generateProductUrl(product.id, product.name),
+    value: product.name,
+  },
 ];
 
 const Page: React.FC<
@@ -36,123 +36,131 @@ const Page: React.FC<
     onAttributeChangeHandler: (slug: string | null, value: string) => void;
   }
 > = ({ add, product, items, queryAttributes, onAttributeChangeHandler }) => {
-    const overlayContext = React.useContext(OverlayContext);
+  const overlayContext = React.useContext(OverlayContext);
 
-    const productGallery: React.RefObject<HTMLDivElement> = React.useRef();
+  const productGallery: React.RefObject<HTMLDivElement> = React.useRef();
 
-    const [variantId, setVariantId] = React.useState("");
+  const [variantId, setVariantId] = React.useState("");
+  const metaDataObject = product.metadata;
 
-    const getImages = () => {
-        if (product.variants && variantId) {
-        const variant = product.variants
-            .filter(variant => variant.id === variantId)
-            .pop();
-        if (variant.images.length > 0) {
-            return variant.images;
-        }
-        return product.images;
-        }
-        return product.images;
-    };
-
-    const handleAddToCart = (variantId, quantity) => {
-        add(variantId, quantity);
-        overlayContext.show(OverlayType.cart, OverlayTheme.right);
-    };
-
-    const addToCartSection = (
-        <AddToCartSection
-        items={items}
-        productId={product.id}
-        name={product.name}
-        productVariants={product.variants}
-        productPricing={product.pricing}
-        queryAttributes={queryAttributes}
-        setVariantId={setVariantId}
-        onAddToCart={handleAddToCart}
-        onAttributeChangeHandler={onAttributeChangeHandler}
-        isAvailableForPurchase={product.isAvailableForPurchase}
-        availableForPurchase={product.availableForPurchase}
-        />
-    );
-    
-    let windowWidth;
-    if (window.innerWidth <= 400) {
-        windowWidth = window.innerWidth - 20;
-    } else if ( window.innerWidth < 1240 && window.innerWidth > 400) {
-        windowWidth = window.innerWidth - 60;
-    } else {
-        windowWidth = 1200;
+  const getImages = () => {
+    if (product.variants && variantId) {
+      const variant = product.variants
+        .filter(variant => variant.id === variantId)
+        .pop();
+      if (variant.images.length > 0) {
+        return variant.images;
+      }
+      return product.images;
     }
+    return product.images;
+  };
 
-    const keepaChartUrlObject = product.metadata;
+  const keepaTrackerImgUrl = (key, width) => {
     let keepaChartUrl;
-    keepaChartUrlObject.find((i) => {
-        if(i.key = 'keepa_id') {
-            let keepaId;
-            keepaId = i.value;
-            keepaChartUrl = `https://charts.camelcamelcamel.com/de/${keepaId}/new.png?force=1&zero=0&w=${windowWidth}&h=400&desired=false&legend=1&ilt=1&tp=all&fo=0&lang=en`;
-            return keepaChartUrl
-        }
+    metaDataObject.find(i => {
+      if (i.key === key) {
+        const keepaId = i.value;
+        keepaChartUrl = `https://charts.camelcamelcamel.com/de/${keepaId}/new.png?force=1&zero=0&w=${width}&h=400&desired=false&legend=1&ilt=1&tp=all&fo=0&lang=en`;
+      }
+      return keepaChartUrl;
     });
+    return keepaChartUrl;
+  };
 
-    return (
-        <div className="product-page">
-        <div className="container">
-            <Breadcrumbs breadcrumbs={populateBreadcrumbs(product)} />
-        </div>
-        <div className="container">
-            <div className="product-page__product">
-            <script className="structured-data-list" type="application/ld+json">
-                {structuredData(product)}
-            </script>
-            <Media query={{ maxWidth: smallScreen }}>
-                {matches =>
-                matches ? (
-                    <>
-                    <GalleryCarousel images={getImages()} />
-                    <div className="product-page__product__info">
-                        {addToCartSection}
-                    </div>
-                    </>
-                ) : (
-                    <>
+  const handleAddToCart = (variantId, quantity) => {
+    add(variantId, quantity);
+    overlayContext.show(OverlayType.cart, OverlayTheme.right);
+  };
+
+  const addToCartSection = (
+    <AddToCartSection
+      items={items}
+      productId={product.id}
+      name={product.name}
+      productVariants={product.variants}
+      productPricing={product.pricing}
+      queryAttributes={queryAttributes}
+      setVariantId={setVariantId}
+      onAddToCart={handleAddToCart}
+      onAttributeChangeHandler={onAttributeChangeHandler}
+      isAvailableForPurchase={product.isAvailableForPurchase}
+      availableForPurchase={product.availableForPurchase}
+    />
+  );
+
+  let windowWidth;
+  if (window.innerWidth <= 400) {
+    windowWidth = window.innerWidth - 20;
+  } else if (window.innerWidth < 1240 && window.innerWidth > 400) {
+    windowWidth = window.innerWidth - 60;
+  } else {
+    windowWidth = 1200;
+  }
+
+  const keyType = "keepa_id";
+  const keepaChartUrl = keepaTrackerImgUrl(keyType, windowWidth);
+  const keepaChart = (
+    <div className="product-page__product__priceTracking">
+      {keepaChartUrl && <h3>Amazon price tracker</h3>}
+      {keepaChartUrl && <img src={keepaChartUrl} alt="AmazonPriceTracker" />}
+    </div>
+  );
+
+  return (
+    <div className="product-page">
+      <div className="container">
+        <Breadcrumbs breadcrumbs={populateBreadcrumbs(product)} />
+      </div>
+      <div className="container">
+        <div className="product-page__product">
+          <script className="structured-data-list" type="application/ld+json">
+            {structuredData(product)}
+          </script>
+          <Media query={{ maxWidth: smallScreen }}>
+            {matches =>
+              matches ? (
+                <>
+                  <GalleryCarousel images={getImages()} />
+                  <div className="product-page__product__info">
+                    {addToCartSection}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div
+                    className="product-page__product__gallery"
+                    ref={productGallery}
+                  >
+                    <ProductGallery images={getImages()} />
+                  </div>
+                  <div className="product-page__product__info">
                     <div
-                        className="product-page__product__gallery"
-                        ref={productGallery}
+                      className={classNames(
+                        "product-page__product__info--fixed"
+                      )}
                     >
-                        <ProductGallery images={getImages()} />
+                      {addToCartSection}
                     </div>
-                    <div className="product-page__product__info">
-                        <div
-                        className={classNames(
-                            "product-page__product__info--fixed"
-                        )}
-                        >
-                        {addToCartSection}
-                        </div>
-                    </div>
-                    </>
-                )
-                }
-            </Media>
-            </div>
+                  </div>
+                </>
+              )
+            }
+          </Media>
         </div>
-        <div className="container">
-            <div className="product-page__product__description">
-            <ProductDescription
-                descriptionJson={product.descriptionJson}
-                attributes={product.attributes}
-            />
-            </div> 
+      </div>
+      <div className="container">
+        <div className="product-page__product__description">
+          <ProductDescription
+            descriptionJson={product.descriptionJson}
+            attributes={product.attributes}
+          />
         </div>
-        <div className="product-page__product__priceTracking">
-            {keepaChartUrl && <h3>Amazon price tracker</h3>}
-            {keepaChartUrl && <img src={keepaChartUrl} />}
-        </div>
-        <OtherProducts products={product.category.products.edges} />
-        </div>
-    );
+      </div>
+      {keepaChart}
+      <OtherProducts products={product.category.products.edges} />
+    </div>
+  );
 };
 
 export default Page;

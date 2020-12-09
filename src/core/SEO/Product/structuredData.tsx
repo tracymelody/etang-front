@@ -7,7 +7,7 @@ const getVariantsStructuredData = variants => {
     itemCondition: "https://schema.org/NewCondition",
     price: variant.pricing.price.gross.amount.toFixed(2),
     priceCurrency: variant.pricing.price.gross.currency,
-    url:location.href,
+    url: location.href,
     sku: variant.sku,
   }));
 };
