@@ -1,31 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useCart } from "@saleor/sdk";
 
-import { ErrorMessage } from "@components/atoms";
-import { CreditCardForm } from "@components/organisms";
-import { IFormError } from "@types";
+import * as dropin from "braintree-web-drop-in";
 
-import {
-  braintreePayment,
-  ErrorData,
-  ICardInputs,
-  ICardPaymentInput,
-  IPaymentCardError,
-  PaymentData,
-} from "../../../../core/payments/braintree";
-import { maybe, removeEmptySpaces } from "../../../../core/utils";
 
 import * as S from "./styles";
 import { IProps } from "./types";
 
-const INITIAL_CARD_ERROR_STATE = {
-  fieldErrors: {
-    cvv: null,
-    expirationMonth: null,
-    expirationYear: null,
-    number: null,
-  },
-  nonFieldError: "",
-};
+
 
 const BraintreePaymentGateway: React.FC<IProps> = ({
   config,
@@ -36,98 +18,202 @@ const BraintreePaymentGateway: React.FC<IProps> = ({
   postalCode,
   onError,
 }: IProps) => {
-  const [submitErrors, setSubmitErrors] = useState<IFormError[]>([]);
+
+// get the price and amout from the cart only necessary for paypal
+  const cartApi = useCart();
+  const amount = cartApi.totalPrice?.net.amount || 0;
+  const currency = cartApi.totalPrice?.net.currency || "EUR";
 
   const clientToken = config.find(({ field }) => field === "client_token")
-    ?.value;
+    ?.value || "";
 
-  const [cardErrors, setCardErrors] = React.useState<ErrorData>(
-    INITIAL_CARD_ERROR_STATE
-  );
+  useEffect(() => {
+    var myContainer = document.getElementById('dropin-ui-button');
 
-  const setCardErrorsHelper = (errors: IPaymentCardError[]) =>
-    errors.map(({ field, message }: IPaymentCardError) =>
-      setCardErrors(({ fieldErrors }) => ({
-        fieldErrors: {
-          ...fieldErrors,
-          [field]: { field, message },
-        },
-      }))
-    );
 
-  const tokenizeCcCard = async (creditCard: ICardPaymentInput) => {
-    setCardErrors(INITIAL_CARD_ERROR_STATE);
-    try {
-      if (clientToken) {
-        const cardData = (await braintreePayment(
-          clientToken,
-          creditCard
-        )) as PaymentData;
-        return cardData;
+    // dropin.create({ authorization: clientToken, container: myContainer }, (error: any, myDropin: { clearSelectedPaymentMethod: () => void; }) => {
+    //   if (error) {
+    //     return;
+    //   }
+    //   if (myDropin) {
+    //     myDropin.clearSelectedPaymentMethod();
+    //   }
+    // });
+
+(async () => {
+  const myOptions: dropin.Options = {
+    authorization: clientToken,
+    container: myContainer,
+    locale: "en-US",
+    translations: {},
+    paymentOptionPriority: ["card", "paypal", "paypalCredit", "venmo", "applePay"],
+    card: {
+      cardholderName: {
+        required: false
+      },
+      overrides: {
+        fields: {},
+        styles: {}
+      },
+      clearFieldsAfterTokenization: false,
+      vault: {
+        allowVaultCardOverride: false,
+        vaultCard: false
       }
-      const braintreeTokenErrors = [
-        {
-          message:
-            "Braintree gateway misconfigured. Client token not provided.",
-        },
-      ];
-      setSubmitErrors(braintreeTokenErrors);
-      onError(braintreeTokenErrors);
-    } catch (errors) {
-      setCardErrorsHelper(errors);
-      onError(errors);
-      return null;
-    }
+    },
+    paypal: {
+      flow: "checkout",
+      amount: amount,
+      currency: currency,
+      commit: false
+    },
+    paypalCredit: undefined,
+    venmo: {
+      allowNewBrowserTab: false
+    },
+    applePay: {
+      displayName: "name",
+      applePaySessionVersion: 1,
+      paymentRequest: {}
+    },
+    // googlePay: {
+    //   merchantId: "",
+    //   googlePayVersion: "",
+    //   transactionInfo: {},
+    //   button: {}
+    // },
+    // dataCollector: {
+    //   kount: false,
+    //   paypal: false
+    // },
+    // threeDSecure: {
+    //   amount: "1"
+    // },
+    vaultManager: false,
+    preselectVaultedPaymentMethod: false
   };
 
-  const handleSubmit = async (formData: ICardInputs) => {
-    setSubmitErrors([]);
-    const creditCard: ICardPaymentInput = {
-      billingAddress: { postalCode },
-      cvv: removeEmptySpaces(maybe(() => formData.ccCsc, "") || ""),
-      expirationDate: removeEmptySpaces(maybe(() => formData.ccExp, "") || ""),
-      number: removeEmptySpaces(maybe(() => formData.ccNumber, "") || ""),
-    };
-    const payment = await tokenizeCcCard(creditCard);
-    if (payment?.token) {
-      processPayment(payment?.token, {
-        brand: payment?.ccType,
-        firstDigits: null,
-        lastDigits: payment?.lastDigits,
-        expMonth: null,
-        expYear: null,
-      });
-    } else {
-      const braintreePayloadErrors = [
-        {
-          message:
-            "Payment submission error. Braintree gateway returned no token in payload.",
-        },
-      ];
-      setSubmitErrors(braintreePayloadErrors);
-      onError(braintreePayloadErrors);
-    }
-  };
 
-  const allErrors = [...errors, ...submitErrors];
+  try {
+    const myDropin = await dropin.create(myOptions);
+
+    myDropin.clearSelectedPaymentMethod();
+
+
+    // processPayment("BraintreeTest", {
+    //      brand: "unfinished",
+    //      lastDigits: "66",
+    //    });
+
+
+  } catch (error){
+    const dropinUIError = [
+         {
+           message: JSON.stringify(error)
+         },
+       ];
+       onError(dropinUIError);
+       console.log(error);
+  }
+    // const myBool: boolean = myDropin.isPaymentMethodRequestable();
+    //
+    // function onNoPaymentMethodRequestable() {
+    //   return;
+    // }
+    // function onPaymentMethodRequestable({ type, paymentMethodIsSelected }: dropin.PaymentMethodRequestablePayload) {
+    //   const myType: "CreditCard" | "PayPalAccount" = type;
+    //   const myBool: boolean = paymentMethodIsSelected;
+    // }
+    // function onPaymentOptionSelected({ paymentOption }: dropin.PaymentOptionSelectedPayload) {
+    //   const myPaymentOption: "card" | "paypal" | "paypalCredit" = paymentOption;
+    // }
+    //
+    // myDropin.on("noPaymentMethodRequestable", onNoPaymentMethodRequestable);
+    // myDropin.on("paymentMethodRequestable", onPaymentMethodRequestable);
+    // myDropin.on("paymentOptionSelected", onPaymentOptionSelected);
+    //
+    // myDropin.off("noPaymentMethodRequestable", onNoPaymentMethodRequestable);
+    // myDropin.off("paymentMethodRequestable", onPaymentMethodRequestable);
+    // myDropin.off("paymentOptionSelected", onPaymentOptionSelected);
+
+    // myDropin.requestPaymentMethod((error: any, payload: any) => {
+    //   if (error) {
+    //     const requestPaymentError = [
+    //       {
+    //         message: JSON.stringify(error)
+    //       },
+    //     ];
+    //     onError(requestPaymentError);
+    //     console.log(error);
+    //     return;
+    //   }
+    // });
+
+    // const myPayload = await myDropin.requestPaymentMethod();
+    // const details: object = myPayload.details;
+    // const deviceData: string | null = myPayload.deviceData;
+    // const nonce: string = myPayload.nonce;
+    // const type: "CreditCard" | "PayPalAccount" | "VenmoAccount" | "AndroidPayCard" | "ApplePayCard" = myPayload.type;
+    // const countryOfIssuance: string = myPayload.binData.countryOfIssuance;
+    //
+    // myDropin.teardown((error: any) => {
+    //   if (error) {
+    //     const tearDownError = [
+    //       {
+    //         message: JSON.stringify(error)
+    //       },
+    //     ];
+    //     onError(tearDownError);
+    //     console.log(error);
+    //     return;
+    //   }
+    // });
+    //
+    // await myDropin.teardown();
+
+
+})();
+
+// function customFunction(options: dropin.Options) {
+//   return;
+// }
+  },
+   []);
+
 
   return (
-    <S.Wrapper data-test="braintreePaymentGateway">
-      <CreditCardForm
-        formRef={formRef}
-        formId={formId}
-        cardErrors={cardErrors.fieldErrors}
-        labelsText={{
-          ccCsc: "CVC",
-          ccExp: "ExpiryDate",
-          ccNumber: "Number",
-        }}
-        disabled={false}
-        handleSubmit={handleSubmit}
-      />
-      <ErrorMessage errors={allErrors} />
+    <S.Wrapper>
+      <div id="dropin-ui-button" />
     </S.Wrapper>
   );
 };
+
+
+    // vom backend??
+    // try {
+    //   if (clientToken) {
+    //     const cardData = (await braintreePayment(
+    //       clientToken,
+    //       creditCard
+    //     )) as PaymentData;
+    //     return cardData;
+    //   } else {
+    //     const braintreeTokenErrors = [
+    //       {
+    //         message:
+    //           "Braintree gateway misconfigured. Client token not provided.",
+    //       },
+    //     ];
+    //     setSubmitErrors(braintreeTokenErrors);
+
+    // im frontend zum weiterverarbeiten??
+    // const payment = await tokenizeCcCard(creditCard);
+    // if (payment?.token) {
+    //   processPayment(payment?.token, {
+    //     brand: payment?.ccType,
+    //     lastDigits: payment?.lastDigits,
+    //   });
+
+
 
 export { BraintreePaymentGateway };

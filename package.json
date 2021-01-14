@@ -7,6 +7,7 @@
   "main": "dist/index.js",
   "browserslist": "last 2 versions",
   "dependencies": {
+    "react-paypal-button-v2": "2.6.2",
     "@babel/runtime": "^7.5.5",
     "@lhci/cli": "^0.4.1",
     "@saleor/sdk": "^0.1.2",
@@ -28,6 +29,7 @@
     "apollo-link-retry": "^2.2.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "braintree-web": "^3.38.1",
+    "braintree-web-drop-in": "^1.24.0",
     "classnames": "^2.2.6",
     "core-js": "^2.5.7",
     "cross-env": "^5.2.1",
@@ -89,6 +91,7 @@
     "@storybook/react": "^5.3.13",
     "@storybook/theming": "^5.3.13",
     "@types/braintree-web": "^3.47.0",
+    "@types/braintree-web-drop-in": "^1.22.1",
     "@types/classnames": "^2.2.6",
     "@types/dompurify": "0.0.33",
     "@types/enzyme": "^3.9.3",
