@@ -3,7 +3,6 @@ import { useCart } from "@saleor/sdk";
 
 import * as dropin from "braintree-web-drop-in";
 
-
 import * as S from "./styles";
 import { IProps } from "./types";
 
@@ -31,14 +30,15 @@ const BraintreePaymentGateway: React.FC<IProps> = ({
     var myContainer = document.getElementById('dropin-ui-button');
 
 
-    // dropin.create({ authorization: clientToken, container: myContainer }, (error: any, myDropin: { clearSelectedPaymentMethod: () => void; }) => {
-    //   if (error) {
-    //     return;
-    //   }
-    //   if (myDropin) {
-    //     myDropin.clearSelectedPaymentMethod();
-    //   }
-    // });
+    dropin.create({ authorization: clientToken, container: myContainer },
+        (error: any, myDropin: { clearSelectedPaymentMethod: () => void; }) => {
+      if (error) {
+        return;
+      }
+      if (myDropin) {
+        myDropin.clearSelectedPaymentMethod();
+      }
+    });
 
 (async () => {
   const myOptions: dropin.Options = {
@@ -76,19 +76,19 @@ const BraintreePaymentGateway: React.FC<IProps> = ({
       applePaySessionVersion: 1,
       paymentRequest: {}
     },
-    // googlePay: {
-    //   merchantId: "",
-    //   googlePayVersion: "",
-    //   transactionInfo: {},
-    //   button: {}
-    // },
-    // dataCollector: {
-    //   kount: false,
-    //   paypal: false
-    // },
-    // threeDSecure: {
-    //   amount: "1"
-    // },
+    googlePay: {
+      merchantId: "",
+      googlePayVersion: "",
+      transactionInfo: {},
+      button: {}
+    },
+    dataCollector: {
+      kount: false,
+      paypal: false
+    },
+    threeDSecure: {
+      amount: "1"
+    },
     vaultManager: false,
     preselectVaultedPaymentMethod: false
   };
