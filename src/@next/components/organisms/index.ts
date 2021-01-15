@@ -28,5 +28,6 @@ export * from "./CheckoutReview";
 export * from "./ThankYou";
 export * from "./AdyenPaymentGateway";
 export * from "./AddToCartSection";
+export * from "./CartSidebar";
 export * from "./PreferencesForm";
 export * from "./PreferencesFormModal";

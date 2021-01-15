@@ -1,5 +1,5 @@
+import Link from "next/link";
 import * as React from "react";
-import { Link } from "react-router-dom";
 
 import {
   generateCategoryUrl,
@@ -7,24 +7,24 @@ import {
   generatePageUrl,
 } from "../../core/utils";
 import {
-  SecondaryMenu_shop_navigation_secondary_items,
-  SecondaryMenu_shop_navigation_secondary_items_children,
+  SecondaryMenu_menu_items,
+  SecondaryMenu_menu_items_children,
 } from "../Footer/gqlTypes/SecondaryMenu";
-import { MainMenu_shop_navigation_main_items } from "../MainMenu/gqlTypes/MainMenu";
+import { MainMenu_menu_items } from "../MainMenu/gqlTypes/MainMenu";
 import { MainMenuSubItem } from "../MainMenu/gqlTypes/MainMenuSubItem";
 
 interface NavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   item:
-    | MainMenu_shop_navigation_main_items
+    | MainMenu_menu_items
     | MainMenuSubItem
-    | SecondaryMenu_shop_navigation_secondary_items
-    | SecondaryMenu_shop_navigation_secondary_items_children;
+    | SecondaryMenu_menu_items
+    | SecondaryMenu_menu_items_children;
 }
 export const NavLink: React.FC<NavLinkProps> = ({ item, ...props }) => {
   const { name, url, category, collection, page } = item;
   const link = (url: string) => (
-    <Link to={url} {...props}>
-      {name}
+    <Link passHref href={url}>
+      <a {...props}>{name}</a>
     </Link>
   );
 

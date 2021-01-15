@@ -1,19 +1,19 @@
-import "./scss/index.scss";
-
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import ReactSVG from "react-svg";
 
+import { OfflinePlaceholder } from "@components/atoms";
+
+import closeImg from "../../../images/x.svg";
 import {
   Offline,
-  OfflinePlaceholder,
   Online,
   Overlay,
   OverlayContextInterface,
   PasswordResetRequestForm,
 } from "../..";
 
-import closeImg from "../../../images/x.svg";
+import "./scss/index.scss";
 
 const Password: React.FC<{ overlay: OverlayContextInterface }> = ({
   overlay,

@@ -14,7 +14,9 @@ import {
   getProductsQuery,
 } from "./queries";
 
-const API_URL = process.env.API_URI || "/graphql/";
+const API_URL = process.env.NEXT_PUBLIC_API_URI || "/graphql/";
+const DEFAULT_CHANNEL =
+  process.env.NEXT_PUBLIC_SALEOR_CHANNEL_SLUG || "default-channel";
 
 const fetchItems = async ({ query, perPage = 100 }, callback: any) => {
   const client = new ApolloClient({
@@ -24,7 +26,7 @@ const fetchItems = async ({ query, perPage = 100 }, callback: any) => {
   const next = async (cursor = null) => {
     const response = await client.query({
       query,
-      variables: { perPage, cursor },
+      variables: { perPage, cursor, channel: DEFAULT_CHANNEL },
     });
     const data =
       response.data[query.definitions[0].selectionSet.selections[0].name.value];

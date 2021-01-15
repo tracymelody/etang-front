@@ -6,7 +6,6 @@ import { checkoutMessages } from "@temp/intl";
 
 import { DiscountForm } from "../DiscountForm";
 import { IDiscountFormData } from "../DiscountForm/types";
-
 import * as S from "./styles";
 import { IProps } from "./types";
 
@@ -21,7 +20,7 @@ const CheckoutPayment: React.FC<IProps> = ({
   addPromoCode,
   removeVoucherCode,
   submitUnchangedDiscount,
-}: IProps) => {
+}) => {
   const [showPromoCodeForm, setShowPromoCodeForm] = useState(
     !!promoCodeDiscount?.voucherCode
   );

@@ -16,7 +16,7 @@ A GraphQL-powered, PWA, single-page application storefront for [Saleor](https://
 
 ## Demo
 
-See the [public demo](http://pwa.saleor.io) of Saleor Storefront!
+See the [public demo](http://demo.saleor.io) of Saleor Storefront!
 
 Or launch the demo on a free Heroku instance.
 
@@ -31,7 +31,9 @@ These instructions will get you a copy of the project up and running on your loc
 - Node.js 10.0+
 - A running instance of Saleor.
 
-  To run the storefront, you have to set the `API_URI` environment variable to point to the Saleor GraphQL API. If you are running Saleor locally with the default settings, set `API_URI` to: `http://localhost:8000/graphql/`.
+To run the storefront, you have to set the `NEXT_PUBLIC_API_URI` environment variable to point to the Saleor GraphQL API.
+If you are running Saleor locally, with the default settings, `NEXT_PUBLIC_API_URI` is set to: `http://localhost:8000/graphql/`.  
+To change it create a [`local.env` file](https://nextjs.org/docs/basic-features/environment-variables#loading-environment-variables) and add it there. Use that file to store any other secrets keys.
 
 ### Installing
 
@@ -52,7 +54,7 @@ cd saleor-storefront
 To use the official stable release, checkout to a release tag:
 
 ```
-$ git checkout 2.10.4
+$ git checkout 2.11.0
 ```
 
 See the list of all releases here: https://github.com/mirumee/saleor-storefront/releases/
@@ -81,7 +83,7 @@ Go to `http://localhost:3000` to access the storefront.
 
 ## Cypress tests
 
-If you want to run [Cypress](https://www.cypress.io/) tests, make sure that all dependecies (including `Cypress`) are installed by running the install command.
+If you want to run [Cypress](https://www.cypress.io/) tests, make sure that all dependencies (including `Cypress`) are installed by running the install command.
 
 ```
 npm i
@@ -94,7 +96,7 @@ Following environment variables are required to be set in order to be able to ru
 - `CYPRESS_USER_NAME` - username (email) for `Storefront` user.
 - `CYPRESS_USER_PASSWORD` - for the user mentioned above.
 
-If you are runninng the Storefront from the perspective of `Docker` container, then you can run tests using following commands:
+If you are running the Storefront from the perspective of `Docker` container, then you can run tests using following commands:
 
 Headless mode:
 
@@ -171,11 +173,15 @@ npm run generate
 ### Receiving confirmation emails
 
 - **Set [EMAIL_URL](https://docs.saleor.io/docs/developer/running-saleor/configuration#setting-environment-variables) environment variable for Saleor core.**
-  - Using Docker - Add EMAIL_URL as new enviornment variable to both the api and worker service following the format [here](https://docs.saleor.io/docs/developer/running-saleor/configuration#email_url).
+  - Using Docker - Add EMAIL_URL as new environment variable to both the api and worker service following the format [here](https://docs.saleor.io/docs/developer/running-saleor/configuration#email_url).
 - **Issues getting emails working?**
   - Gmail
     - Check to see that "Less secure app access" is turned ON. Under "Manage your Google Account" > Go to the security tab. By default, the setting is off for security reasons.
     - If using 2FA make sure to set an [app password](https://support.google.com/accounts/answer/185833?p=InvalidSecondFactor&visit_id=637355441414497566-1310044707&rd=1) and use that in place of your normal login password.
+
+### Multichannel
+
+- **Set [SALEOR_CHANNEL_SLUG] environment variable.** - Default value: `default-channel`.
 
 ## License
 

@@ -1,16 +1,17 @@
 import classNames from "classnames";
+import Link from "next/link";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import Media from "react-media";
-import { Link } from "react-router-dom";
+
+import { paths } from "@paths";
 import { commonMessages } from "@temp/intl";
 
-import { baseUrl } from "../../app/routes";
 import { getDBIdFromGraphqlId, slugify } from "../../core/utils";
 import { Category_category } from "../../views/Category/gqlTypes/Category";
 
-import { smallScreen } from "../../globalStyles/scss/variables.scss";
 import "./scss/index.scss";
+import { smallScreen } from "../../globalStyles/scss/variables.scss";
 
 export interface Breadcrumb {
   value: string;
@@ -53,25 +54,31 @@ const Breadcrumbs: React.FC<{
       matches ? (
         <ul className="breadcrumbs">
           <li>
-            <Link to={baseUrl}>
-              <FormattedMessage {...commonMessages.home} />
+            <Link href={paths.home}>
+              <a>
+                <FormattedMessage {...commonMessages.home} />
+              </a>
             </Link>
           </li>
           {breadcrumbs.map((breadcrumb, index) => (
             <li
-              key={breadcrumb.value}
+              key={`${breadcrumb.value}-${index}`}
               className={classNames({
                 breadcrumbs__active: index === breadcrumbs.length - 1,
               })}
             >
-              <Link to={breadcrumb.link}>{breadcrumb.value}</Link>
+              <Link href={breadcrumb.link}>
+                <a>{breadcrumb.value}</a>
+              </Link>
             </li>
           ))}
         </ul>
       ) : (
         <div className="breadcrumbs">
-          <Link to={getBackLink(breadcrumbs)}>
-            <FormattedMessage defaultMessage="Back" />
+          <Link href={getBackLink(breadcrumbs)}>
+            <a>
+              <FormattedMessage defaultMessage="Back" />
+            </a>
           </Link>
         </div>
       )

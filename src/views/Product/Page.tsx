@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React from "react";
 import Media from "react-media";
+
 import { ProductDescription } from "@components/molecules";
 import { ProductGallery } from "@components/organisms";
 import AddToCartSection from "@components/organisms/AddToCartSection";
-import { smallScreen } from "../../globalStyles/scss/variables.scss";
 
 import {
   Breadcrumbs,
@@ -12,12 +12,13 @@ import {
   OverlayTheme,
   OverlayType,
 } from "../../components";
+import { structuredData } from "../../core/SEO/Product/structuredData";
 import { generateCategoryUrl, generateProductUrl } from "../../core/utils";
 import GalleryCarousel from "./GalleryCarousel";
 import OtherProducts from "./Other";
-
-import { structuredData } from "../../core/SEO/Product/structuredData";
 import { IProps } from "./types";
+
+import { smallScreen } from "../../globalStyles/scss/variables.scss";
 
 const populateBreadcrumbs = product => [
   {
@@ -45,14 +46,15 @@ const Page: React.FC<
 
   const getImages = () => {
     if (product.variants && variantId) {
-      const variant = product.variants
-        .filter(variant => variant.id === variantId)
-        .pop();
+      const variant = product.variants.find(
+        variant => variant.id === variantId
+      );
+
       if (variant.images.length > 0) {
         return variant.images;
       }
-      return product.images;
     }
+
     return product.images;
   };
 
@@ -82,6 +84,7 @@ const Page: React.FC<
       productPricing={product.pricing}
       queryAttributes={queryAttributes}
       setVariantId={setVariantId}
+      variantId={variantId}
       onAddToCart={handleAddToCart}
       onAttributeChangeHandler={onAttributeChangeHandler}
       isAvailableForPurchase={product.isAvailableForPurchase}

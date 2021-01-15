@@ -1,8 +1,10 @@
+import { useAuth } from "@saleor/sdk";
+import { useRouter } from "next/router";
 import React from "react";
 
-import { useAuth } from "@saleor/sdk";
-import { DemoBanner, Loader } from "@components/atoms";
+import { Loader } from "@components/atoms";
 import { demoMode } from "@temp/constants";
+
 import {
   Footer,
   MainMenu,
@@ -11,11 +13,12 @@ import {
   OverlayProvider,
 } from "../components";
 import ShopProvider from "../components/ShopProvider";
-import "../globalStyles/scss/index.scss";
-import { Routes } from "./routes";
 import Notifications from "./Notifications";
 
-const App: React.FC = () => {
+import "../globalStyles/scss/index.scss";
+
+const App: React.FC = ({ children }) => {
+  const { pathname } = useRouter();
   const { tokenRefreshing, tokenVerifying } = useAuth();
 
   if (tokenRefreshing || tokenVerifying) {
@@ -24,13 +27,10 @@ const App: React.FC = () => {
 
   return (
     <ShopProvider>
-      <OverlayProvider>
+      <OverlayProvider pathname={pathname}>
         <MetaConsumer />
-        {demoMode && <DemoBanner />}
-        <header>
-          <MainMenu />
-        </header>
-        <Routes />
+        <MainMenu demoMode={demoMode} />
+        {children}
         <Footer />
         <OverlayManager />
         <Notifications />

@@ -666,10 +666,6 @@ export interface ProductDetails_product_variants {
   sku: string;
   name: string;
   /**
-   * Whether the variant is in stock and visible or not.
-   */
-  isAvailable: boolean | null;
-  /**
    * Quantity of a product available for sale in one checkout.
    */
   quantityAvailable: number;
@@ -730,6 +726,9 @@ export interface ProductDetails_product {
    * Whether the product is available for purchase.
    */
   isAvailableForPurchase: boolean | null;
+  /**
+   * Date when product is available for purchase. 
+   */
   availableForPurchase: any | null;
     /**
    * The pricing history charts
@@ -746,5 +745,6 @@ export interface ProductDetails {
 
 export interface ProductDetailsVariables {
   id: string;
+  channel?: string | null;
   countryCode?: CountryCode | null;
 }
