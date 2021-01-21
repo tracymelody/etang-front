@@ -37,7 +37,7 @@ class Footer extends React.PureComponent {
               ))}
             </div>
           </div>
-         <div className="footer-nav__section left">
+          <div className="footer-nav__section left">
             <h4 className="footer-nav__section-header">Social Media</h4>
             <div className="footer__favicons">
               {SOCIAL_MEDIA.map(medium => (
