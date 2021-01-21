@@ -61,6 +61,28 @@ export const SOCIAL_MEDIA = [
     path: require("../images/youtube-icon.svg"),
   },
 ];
+export const PAYMENT_LOGO = [
+  {
+    ariaLabel: "mastercard",
+    href: "https://stripe.com/docs/payments/cards/supported-card-brands",
+    path: require("../images/mastercard.svg"),
+  },
+  {
+    ariaLabel: "maestro",
+    href: "https://stripe.com/docs/payments/cards/supported-card-brands",
+    path: require("../images/maestro.svg"),
+  },
+  {
+    ariaLabel: "visa",
+    href: "https://stripe.com/docs/payments/cards/supported-card-brands",
+    path: require("../images/visa.svg"),
+  },
+  {
+    ariaLabel: "amex",
+    href: "https://stripe.com/docs/payments/cards/supported-card-brands",
+    path: require("../images/amex.svg"),
+  },
+];
 export const META_DEFAULTS = {
   custom: [],
   description:

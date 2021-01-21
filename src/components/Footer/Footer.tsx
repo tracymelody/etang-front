@@ -2,7 +2,7 @@ import * as React from "react";
 import { NavLink, SocialMediaIcon } from "..";
 import { TypedSecondaryMenuQuery } from "./queries";
 
-import { SOCIAL_MEDIA } from "../../core/config";
+import { SOCIAL_MEDIA, PAYMENT_LOGO } from "../../core/config";
 import "./scss/index.scss";
 import LocaleSelect from "./LocaleSelect";
 
@@ -29,7 +29,15 @@ class Footer extends React.PureComponent {
               ));
             }}
           </TypedSecondaryMenuQuery>
-          <div className="footer-nav__section right">
+          <div className="footer-nav__section align-middle">
+            <h4 className="footer-nav__section-header">Zahlungsart</h4>
+            <div className="footer__favicons">
+              {PAYMENT_LOGO.map(medium => (
+                <SocialMediaIcon medium={medium} key={medium.ariaLabel} />
+              ))}
+            </div>
+          </div>
+         <div className="footer-nav__section left">
             <h4 className="footer-nav__section-header">Social Media</h4>
             <div className="footer__favicons">
               {SOCIAL_MEDIA.map(medium => (
